@@ -16,7 +16,20 @@ public class InsertionSort {
         }
         return A;
     }
-
+    public int[] SortDescending(int[] A)
+    {
+        for(int j = 1; j < A.length; j++)
+        {
+            int key  = A[j];
+            int i = j-1;
+            while (i >= 0 && key > A[i]) {
+                A[i+1] = A[i];
+                i--;
+            }
+            A[i+1] = key;
+        }
+        return A;
+    }
      /*
         loop invariants:
         for each iteration of the "for" loop, the sub array A[0 to j-1] is sorted,
