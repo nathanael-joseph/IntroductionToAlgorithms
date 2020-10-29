@@ -1,4 +1,4 @@
-import java.lang.reflect.Array;
+package Chapter1;
 
 public class InsertionSort {
 
@@ -32,5 +32,5 @@ public class InsertionSort {
         termination - the loop terminates when j = A.length, where the array A[0 to A.length - 1] is sorted.
         t.f. A is sorted when the loop terminates.
      */
-     
+
 }
