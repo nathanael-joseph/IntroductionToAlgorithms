@@ -7,7 +7,7 @@ public class BinaryAddition {
 
     The function must return an int array C, of length n+1, s.t. C is the binary value of A + B.
      */
-    public int[] Add(int[] A, int[] B)
+    public static int[] Add(int[] A, int[] B)
     {
         int n = A.length;
         int[] C = new int[n+1];

@@ -2,7 +2,7 @@ package Chapter1;
 
 public class InsertionSort {
 
-    public int[] Sort(int[] A)
+    public static int[] Sort(int[] A)
     {
         for(int j = 1; j < A.length; j++)
         {
@@ -16,7 +16,7 @@ public class InsertionSort {
         }
         return A;
     }
-    public int[] SortDescending(int[] A)
+    public static int[] SortDescending(int[] A)
     {
         for(int j = 1; j < A.length; j++)
         {
