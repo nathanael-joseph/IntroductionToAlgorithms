@@ -1,4 +1,4 @@
-package Chapter1;
+package Chapters1to3;
 
 public class MergeSort {
     public static void Sort(int[] A)

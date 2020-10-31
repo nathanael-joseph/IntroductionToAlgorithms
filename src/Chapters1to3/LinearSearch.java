@@ -1,4 +1,4 @@
-package Chapter1;
+package Chapters1to3;
 
 public class LinearSearch {
     public static int Search(int[] A, int v)
