@@ -5,28 +5,36 @@ import java.util.function.Consumer;
 import Chapters9to11.LinkedQueue;
 
 public class BinaryTree<T extends Comparable<T>> {
-    // tree node class.
+    // Tree node class -------------------------------------------------------
     private class TreeNode<Q> {
         private Q _data;
         private TreeNode<Q> _parent;
         private TreeNode<Q> _leftChild;
         private TreeNode<Q> _rightChild;
-
+        // prevent null nodes.
         private TreeNode(Q q) {
+            if(q == null) {
+                throw new IllegalArgumentException("cannot create TreeNode for null.");
+            }
             _data = q;
         }
     }
-
+    //------------------------------------------------------------------------
+    
+    // Properties ------------------------------------------------------------
     private TreeNode<T> _head;
+    //------------------------------------------------------------------------
 
+    // Constructors ----------------------------------------------------------
     public BinaryTree() {
     }
-
+    
     public BinaryTree(T head) {
         _head = new TreeNode<T>(head);
     }
+    //------------------------------------------------------------------------
 
-
+    // Tree walking methods --------------------------------------------------
     public void preOrderTreeWalk(Consumer<T> consumer) {
         preOrderTreeWalk(consumer, _head);
     }
@@ -82,7 +90,46 @@ public class BinaryTree<T extends Comparable<T>> {
             }
         }
     }
+    //------------------------------------------------------------------------
 
+    // min and max -----------------------------------------------------------
+    public T getMinimum() {
+        return getMinimum(_head)._data;
+    }
+    private TreeNode<T> getMinimum(TreeNode<T> head) {
+        if(head == null) {
+            return null;
+        }
+        TreeNode<T> node = head;
+        while(node._leftChild != null) {
+            node = node._leftChild;
+        }
+        return node;
+    }
+
+    public T getMaximum() {
+        return getMaximum(_head)._data;
+    }
+    private TreeNode<T> getMaximum(TreeNode<T> head) {
+        if(head == null) {
+            return null;
+        }
+        TreeNode<T> node = head;
+        while(node._leftChild != null) {
+            node = node._leftChild;
+        }
+        return node;
+    }
+    //------------------------------------------------------------------------
+
+    // successor and predecessor ---------------------------------------------
+
+    // TODO 
+
+    //------------------------------------------------------------------------
+    
+    // insert, contains, remove ----------------------------------------------
+    
     public void insert(T t) {
         TreeNode<T> node = new TreeNode<T>(t);
         if(_head == null) {
@@ -97,6 +144,7 @@ public class BinaryTree<T extends Comparable<T>> {
                 next = next._leftChild;
                 if(next == null) {
                     current._leftChild = node;
+                    node._parent = current;
                     return;
                 }
             } else if (t.compareTo(next._data) > 0) {
@@ -104,18 +152,22 @@ public class BinaryTree<T extends Comparable<T>> {
                 next = next._rightChild;   
                 if(next == null) {
                     current._rightChild = node;
+                    node._parent = current;
                     return;
                 }
             } else {
-                // if they are equeal, node will be inserted as rigcurrent._richchild
+                // if they are equeal, node will be inserted as current._richchild
                 node._rightChild = next._rightChild;
                 next._rightChild = node;
+                node._parent = next;
                 return;
             }
         }
     }
 
+    // TODO 
 
+    //------------------------------------------------------------------------
 }
 
 
