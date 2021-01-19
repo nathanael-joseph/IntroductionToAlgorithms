@@ -2,11 +2,13 @@ package Chapters12to14;
 
 import java.util.function.Consumer;
 
+import javax.swing.tree.TreeNode;
+
 import Chapters9to11.LinkedQueue;
 
-public class BinaryTree<T extends Comparable<T>> {
+public class BinarySearchTree<T extends Comparable<T>> {
     // Tree node class -------------------------------------------------------
-    private class TreeNode<Q> {
+    public static class TreeNode<Q> {
         private Q _data;
         private TreeNode<Q> _parent;
         private TreeNode<Q> _leftChild;
@@ -18,6 +20,11 @@ public class BinaryTree<T extends Comparable<T>> {
             }
             _data = q;
         }
+
+        @Override
+        public String toString() {
+            return _data.toString();
+        }
     }
     //------------------------------------------------------------------------
     
@@ -26,10 +33,10 @@ public class BinaryTree<T extends Comparable<T>> {
     //------------------------------------------------------------------------
 
     // Constructors ----------------------------------------------------------
-    public BinaryTree() {
+    public BinarySearchTree() {
     }
     
-    public BinaryTree(T head) {
+    public BinarySearchTree(T head) {
         _head = new TreeNode<T>(head);
     }
     //------------------------------------------------------------------------
@@ -124,11 +131,80 @@ public class BinaryTree<T extends Comparable<T>> {
 
     // successor and predecessor ---------------------------------------------
 
-    // TODO 
+    // returns null if node is maximum.
+    public TreeNode<T> getSuccessor(TreeNode<T> node) {
 
+        // null check.
+        if(node == null) {
+            throw new IllegalArgumentException("argument 'node' cannot be null");
+        }
+
+        TreeNode<T> successor = null;
+
+        // node has right child.
+        if (node._rightChild != null) {
+            return getMinimum(node._rightChild);
+        } 
+
+        // node is head and has no right child -> node is maximum.
+        if (node._parent == null) {
+            
+            return null;
+        }
+
+        // node is left child -> parent is successor.
+        if (node._parent._leftChild == node) {
+            return node._parent;
+        }
+
+        // node is right child.
+        while(node._parent != null) {
+            if(node._parent._leftChild == node) {
+                return node._parent;
+            }
+            node = node._parent;
+        }
+
+        return successor;
+    }
+
+    // returns null if node is minimum
+    public TreeNode<T> getPredecessor(TreeNode<T> node) {
+        // null check.
+        if(node == null) {
+            throw new IllegalArgumentException("argument 'node' cannot be null");
+        }
+
+        TreeNode<T> predecessor = null;
+        
+        // node has left child.
+        if(node._leftChild != null) {
+            return getMaximum(node._leftChild);
+        }
+
+        // node is head and has no left child -> node is minimum.  
+        if(node._parent == null) {
+            return null;
+        }
+
+        // node is right child -> parent is predecessor.
+        if(node._parent._rightChild == node) {
+            return node._parent;
+        }
+
+        // node is left child
+        while (node._parent != null) {
+            if(node._parent._rightChild == node) {
+                return node._parent;
+            }
+            node = node._parent;
+        }
+
+        return predecessor;
+    }
     //------------------------------------------------------------------------
     
-    // insert, contains, remove ----------------------------------------------
+    // insert, findFirst, remove ----------------------------------------------
     
     public void insert(T t) {
         TreeNode<T> node = new TreeNode<T>(t);
@@ -164,7 +240,27 @@ public class BinaryTree<T extends Comparable<T>> {
             }
         }
     }
+    // returns null if no t is found.
+    public TreeNode<T> findFirst(T t) {
+        if(t == null) {
+            throw new IllegalArgumentException("argument 't' cannot be null");
+        }
 
+        TreeNode<T> node = _head;
+        TreeNode<T> found = null;
+        while(node != null) {
+            if(t.compareTo(node._data) == 0) {
+                return node;
+            }
+            if(t.compareTo(node._data) > 0) {
+                node = node._rightChild;
+            }
+            if(t.compareTo(node._data) < 0) {
+                node = node._leftChild;
+            }
+        }
+        return found;
+    }
     // TODO 
 
     //------------------------------------------------------------------------

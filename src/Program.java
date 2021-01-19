@@ -1,7 +1,6 @@
-import Chapters1to3.Maman11;
-import Chapters6to8.MaxHeap;
-import Chapters6to8.QuickSort;
+
 import Chapters12to14.*;
+import Chapters12to14.BinarySearchTree.TreeNode;
 
 public class Program {
 
@@ -9,7 +8,7 @@ public class Program {
         System.out.println("hello world");
         int[] arr = {11,4,19,13,5,7,8,1,12,23,4,14};
 
-        BinaryTree<Integer> tree = new BinaryTree<Integer>();
+        BinarySearchTree<Integer> tree = new BinarySearchTree<Integer>();
 
 
         for(int i = 0; i< arr.length; i++) {
@@ -20,6 +19,30 @@ public class Program {
         tree.inOrderTreeWalk(x -> System.out.println(x));
         System.out.println("BF tree walk:");
         tree.breadthFirstTreeWalk(x -> System.out.println(x));
+
+        TreeNode<Integer> node = tree.findFirst(8);
+
+        System.out.println("node found contains: " + node.toString());
+        System.out.println("node's successor is: " + tree.getSuccessor(node));
+        System.out.println("node's predecessor is: " + tree.getPredecessor(node));
+
+        node = tree.findFirst(1);
+
+        System.out.println("node found contains: " + node.toString());
+        System.out.println("node's successor is: " + tree.getSuccessor(node));
+        System.out.println("node's predecessor is: " + tree.getPredecessor(node));
+
+        node = tree.findFirst(23);
+
+        System.out.println("node found contains: " + node.toString());
+        System.out.println("node's successor is: " + tree.getSuccessor(node));
+        System.out.println("node's predecessor is: " + tree.getPredecessor(node));
+
+        node = tree.findFirst(4);
+
+        System.out.println("node found contains: " + node.toString());
+        System.out.println("node's successor is: " + tree.getSuccessor(node));
+        System.out.println("node's predecessor is: " + tree.getPredecessor(node));
 
         System.out.println("End");
     }
