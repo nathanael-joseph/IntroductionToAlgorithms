@@ -2,8 +2,6 @@ package Chapters12to14;
 
 import java.util.function.Consumer;
 
-import javax.swing.tree.TreeNode;
-
 import Chapters9to11.LinkedQueue;
 
 public class BinarySearchTree<T extends Comparable<T>> {
