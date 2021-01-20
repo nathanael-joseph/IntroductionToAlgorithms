@@ -7,12 +7,12 @@ import Chapters9to11.LinkedQueue;
 public class BinarySearchTree<T extends Comparable<T>> {
     // Tree node class -------------------------------------------------------
     public static class TreeNode<Q> {
-        private Q _data;
-        private TreeNode<Q> _parent;
-        private TreeNode<Q> _leftChild;
-        private TreeNode<Q> _rightChild;
+        protected Q _data;
+        protected TreeNode<Q> _parent;
+        protected TreeNode<Q> _leftChild;
+        protected TreeNode<Q> _rightChild;
         // prevent null nodes.
-        private TreeNode(Q q) {
+        protected TreeNode(Q q) {
             if(q == null) {
                 throw new IllegalArgumentException("cannot create TreeNode for null.");
             }
@@ -27,7 +27,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
     //------------------------------------------------------------------------
     
     // Properties ------------------------------------------------------------
-    private TreeNode<T> _head;
+    protected TreeNode<T> _head;
     //------------------------------------------------------------------------
 
     // Constructors ----------------------------------------------------------
@@ -44,7 +44,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
         preOrderTreeWalk(consumer, _head);
     }
     // recursive pre-order tree walk.
-    private void preOrderTreeWalk(Consumer<T> consumer, TreeNode<T> node) {
+    protected void preOrderTreeWalk(Consumer<T> consumer, TreeNode<T> node) {
         if(node != null) {
             consumer.accept(node._data);
             preOrderTreeWalk(consumer, node._leftChild);
@@ -56,7 +56,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
         inOrderTreeWalk(consumer, _head);
     }
     // recursive in order tree walk.
-    private void inOrderTreeWalk(Consumer<T> consumer, TreeNode<T> node) {
+    protected void inOrderTreeWalk(Consumer<T> consumer, TreeNode<T> node) {
         if(node != null) {
             inOrderTreeWalk(consumer, node._leftChild);
             consumer.accept(node._data);
@@ -68,7 +68,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
         postOrderTreeWalk(consumer, _head);
     }
     // recursive post order tree walk.
-    private void postOrderTreeWalk(Consumer<T> consumer, TreeNode<T> node) {
+    protected void postOrderTreeWalk(Consumer<T> consumer, TreeNode<T> node) {
         if(node != null) {
             postOrderTreeWalk(consumer, node._leftChild);
             postOrderTreeWalk(consumer, node._rightChild);
@@ -83,7 +83,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
         }
         breadthFirstTreeWalk(consumer, queue);
     }
-    private void breadthFirstTreeWalk(Consumer<T> consumer, LinkedQueue<TreeNode<T>> queue) {
+    protected void breadthFirstTreeWalk(Consumer<T> consumer, LinkedQueue<TreeNode<T>> queue) {
         while(!queue.isEmpty()) {
             TreeNode<T> node = queue.Dequeue();
             consumer.accept(node._data);
@@ -101,7 +101,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
     public T getMinimum() {
         return getMinimum(_head)._data;
     }
-    private TreeNode<T> getMinimum(TreeNode<T> head) {
+    protected TreeNode<T> getMinimum(TreeNode<T> head) {
         if(head == null) {
             return null;
         }
@@ -115,7 +115,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
     public T getMaximum() {
         return getMaximum(_head)._data;
     }
-    private TreeNode<T> getMaximum(TreeNode<T> head) {
+    protected TreeNode<T> getMaximum(TreeNode<T> head) {
         if(head == null) {
             return null;
         }
@@ -259,7 +259,73 @@ public class BinarySearchTree<T extends Comparable<T>> {
         }
         return found;
     }
-    // TODO 
+    
+    public void remove(TreeNode<T> node) {
+        // node is leaf.
+        if(node._leftChild == null && node._rightChild == null) {
+            // node is head
+            if(node == _head) {
+                _head = null;
+                return;
+            }
+            // node is left child
+            if(node._parent._leftChild == node) {
+                node._parent._leftChild = null;
+                return;
+            }
+            // node is right child
+            if(node._parent._rightChild == node) {
+                node._parent._rightChild = null;
+                return;
+            }
+        }
+        // node has only left child
+        if(node._leftChild != null && node._rightChild == null) {
+            // node is head
+            if(node == _head) {
+                _head = node._leftChild;
+                _head._parent = null;
+                return;
+            }
+            // node is left child
+            if(node._parent._leftChild == node) {
+                node._parent._leftChild = node._leftChild;
+                node._leftChild._parent = node._parent;
+                return;
+            }
+            // node is reight child
+            if(node._parent._rightChild == node) {
+                node._parent._rightChild = node._leftChild;
+                node._leftChild._parent = node._parent;
+                return;
+            }
+        }
+        // node has only right child
+        if(node._leftChild == null && node._rightChild != null)  {
+            // node is head
+            if(node == _head) {
+                _head = node._rightChild;
+                _head._parent = null;
+                return;
+            }
+            // node is left child
+            if(node._parent._leftChild == node) {
+                node._parent._leftChild = node._rightChild;
+                node._rightChild._parent = node._parent;
+                return;
+            }
+            // node is reight child
+            if(node._parent._rightChild == node) {
+                node._parent._rightChild = node._rightChild;
+                node._rightChild._parent = node._parent;
+                return;
+            }
+        }
+        // node has two children
+        TreeNode<T> successor = getSuccessor(node);
+        remove(successor);
+        node._data = successor._data;
+    }
 
     //------------------------------------------------------------------------
 }

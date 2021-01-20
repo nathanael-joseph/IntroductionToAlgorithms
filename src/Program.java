@@ -44,6 +44,20 @@ public class Program {
         System.out.println("node's successor is: " + tree.getSuccessor(node));
         System.out.println("node's predecessor is: " + tree.getPredecessor(node));
 
+        node = tree.findFirst(13);
+        tree.remove(node);
+        tree.breadthFirstTreeWalk(x -> System.out.println(x));
+        
+        System.out.println("----------------------------");
+        node = tree.findFirst(8);
+        tree.remove(node);
+        tree.breadthFirstTreeWalk(x -> System.out.println(x));
+
+        System.out.println("----------------------------");
+        node = tree.findFirst(11);
+        tree.remove(node);
+        tree.breadthFirstTreeWalk(x -> System.out.println(x));
+
         System.out.println("End");
     }
 }
