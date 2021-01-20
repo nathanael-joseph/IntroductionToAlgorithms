@@ -6,7 +6,7 @@ import Chapters9to11.LinkedQueue;
 
 public class BinarySearchTree<T extends Comparable<T>> {
     // Tree node class -------------------------------------------------------
-    public static class TreeNode<Q> {
+    public static class TreeNode<Q extends Comparable<Q>> {
         protected Q _data;
         protected TreeNode<Q> _parent;
         protected TreeNode<Q> _leftChild;

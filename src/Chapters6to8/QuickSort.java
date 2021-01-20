@@ -1,20 +1,20 @@
 package Chapters6to8;
 
 public class QuickSort {
-    public static int[] QuickSort(int[] arr) {
-        return _quickSort(arr, 0, arr.length-1);
+    public static int[] quickSort(int[] arr) {
+        return quickSort(arr, 0, arr.length-1);
     }
 
-    private static int[] _quickSort(int[] arr, int p, int r) {
+    private static int[] quickSort(int[] arr, int p, int r) {
         if( p < r )
         {
-            int q = _partition(arr, p, r);
-            _quickSort(arr, p, q-1);
-            _quickSort(arr, q+1, r);
+            int q = partition(arr, p, r);
+            quickSort(arr, p, q-1);
+            quickSort(arr, q+1, r);
         }
         return arr;
     }
-    private static int _partition(int[] arr, int p, int r) {
+    private static int partition(int[] arr, int p, int r) {
         int x = arr[r];
         int i = p-1;
         for(int j = p; j < r; j++) {
