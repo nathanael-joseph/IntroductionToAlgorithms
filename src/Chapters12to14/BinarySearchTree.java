@@ -204,14 +204,19 @@ public class BinarySearchTree<T extends Comparable<T>> {
     
     // insert, findFirst, remove ----------------------------------------------
     
-    public void insert(T t) {
+    public TreeNode<T> insert(T t) {
         TreeNode<T> node = new TreeNode<T>(t);
+        return insert(node);
+    }
+    
+    protected TreeNode<T> insert(TreeNode<T> node) {
         if(_head == null) {
             _head = node;
-            return;
+            return node;
         }
         TreeNode<T> current = _head;
         TreeNode<T> next = _head;
+        T t = node._data;
         while (true) {
             if(t.compareTo(next._data) < 0 ) {
                 current = next;
@@ -219,7 +224,7 @@ public class BinarySearchTree<T extends Comparable<T>> {
                 if(next == null) {
                     current._leftChild = node;
                     node._parent = current;
-                    return;
+                    return node;
                 }
             } else if (t.compareTo(next._data) > 0) {
                 current = next;
@@ -227,17 +232,18 @@ public class BinarySearchTree<T extends Comparable<T>> {
                 if(next == null) {
                     current._rightChild = node;
                     node._parent = current;
-                    return;
+                    return node;
                 }
             } else {
                 // if they are equeal, node will be inserted as current._richchild
                 node._rightChild = next._rightChild;
                 next._rightChild = node;
                 node._parent = next;
-                return;
+                return node;
             }
         }
     }
+
     // returns null if no t is found.
     public TreeNode<T> findFirst(T t) {
         if(t == null) {
@@ -247,14 +253,13 @@ public class BinarySearchTree<T extends Comparable<T>> {
         TreeNode<T> node = _head;
         TreeNode<T> found = null;
         while(node != null) {
-            if(t.compareTo(node._data) == 0) {
-                return node;
-            }
             if(t.compareTo(node._data) > 0) {
                 node = node._rightChild;
-            }
-            if(t.compareTo(node._data) < 0) {
+            } else if(t.compareTo(node._data) < 0) {
                 node = node._leftChild;
+            } else {
+                // t == node._data
+                return node;
             }
         }
         return found;
